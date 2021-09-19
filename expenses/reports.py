@@ -30,11 +30,12 @@ def summary_per_year_month(queryset):
             .values_list('year_month', 'sum')
     ))
 
+def count_expenses(category):
+    return Expense.objects.filter(category=category).count()
 
 def all_summary(queryset):
     amount_sum = queryset.aggregate(Sum('amount'))['amount__sum']
     return amount_sum
 
 
-def count_expenses(category):
-    return Expense.objects.filter(category=category).count()
+
