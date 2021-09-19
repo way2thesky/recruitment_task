@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <br>
+
+
+    <button><a href="{% url 'expenses:category-list' %}">Category list</a></button>
+    <button><a href="{% url 'expenses:expense-list' %}">Expenses List</a> </button>
+
+
+    <table cellspacing="0" cellpadding="10" rules="auto"
+           border="1" width="50%">
+
+        <tr bgcolor="#777">
+            <td><b>id</b></td>
+            <td><b>Category Name</b></td>
+            <td><b>Expenses</b></td>
+            <td><b>Summary per Month:</b></td>
+            <td><b>Summary per Year:</b></td>
+
+        </tr>
+        {% if summary_per_year_month %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td>{{ category.name }}</td>
+                <td>{{ count_expenses }}</td>
+                {% for year_month, total in summary_per_year_month.items %}
+
+                    <td>{{ year_month|date:"Y-m" }}: {{ total|floatformat:2 }}{% endfor %}</td>
+            </tr>
+        {% else %}
+            <h2>Summary per year/month:</h2>
+        {% endif %}
+
+
+    </table>
+
+    <button>
+        <a href="{% url 'expenses:category-edit' category.id %}">Edit</a>
+    </button>
+    <button>
+        <a href="{% url 'expenses:category-delete' category.id %}">Delete</a>
+    </button>
+
+{% endblock %}

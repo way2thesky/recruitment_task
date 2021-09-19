@@ -2,12 +2,17 @@
 
 {% block content %}
 
-<a href="{% url 'expenses:expense-create' %}">add</a>
+<button><a href="{% url 'expenses:expense-create' %}">Add</a> </button>
+<button><a href="{% url 'expenses:category-list' %}">Category list</a></button> <br><br>
+
 
 <form method="get" action="">
   {{form.as_p}}
   <button type="submit">search</button>
 </form>
+    <span class="badge badge-primary badge-pill">
+  Total amount spent: {{ overall_summary }}
+</span>
 <br>
 <table border="1">
   {% if form.cleaned_data.grouping == "date" %}
@@ -92,5 +97,6 @@
     {% for year_month, total in summary_per_year_month.items %}<td>{{year_month|date:"Y-m"}}: {{total|floatformat:2}}</td>{% endfor %}
   </tr>
 </table>
+<hr>
 
 {% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br>
+    <br>
+    <form method="get" action="">
+        {{ form.as_p }}
+        <button type="submit">search</button>
+    </form>
+    <br>
+
+      <table cellspacing="0" cellpadding="10" rules="auto"
+           border="1" width="50%">
+
+        <tr bgcolor="#777">
+
+
+            <th>ID</th>
+            <th>Name Category</th>
+            <th>Expenses</th>
+            <th>Actions</th>
+            <th>Actions</th>
+        </tr>
+
+        <tbody>
+        {% for obj in object_list %}
+
+            <tr>
+                <td>{{ page_obj.start_index|add:forloop.counter0 }}.</td>
+
+                <td>
+                    <a href="{% url 'expenses:category-detail' obj.id %}">
+                        {{ obj.name|default:"-" }}
+                    </a>
+                </td>
+                <td>{{ obj.expense_set.count }}</td>
+
+
+                <td><a href="{% url 'expenses:category-edit' obj.id %}">Edit</a></td>
+                <td><a href="{% url 'expenses:category-delete' obj.id %}">Delete</a></td>
+
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">no items</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <button><a href="{% url 'expenses:category-create' %} ">Add category </a> </button>
+    <button><a href="{% url 'expenses:expense-list' %}">Expenses List</a> </button>
+   <button> <a href="{% url 'expenses:category-list' %}">Category List</a></button>
+
+    <br><br>
+    {% include "_pagination.html" %}
+
+{% endblock %}
